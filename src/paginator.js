@@ -135,7 +135,7 @@
 
             //首页
             if (paginator.get('firstLast')) {
-                disabled = page <= half || totalPages <= pageSpan;
+                disabled = page <= 0;
                 markup += paginator.__getPageMarkup(0, '首页', disabled);
             }
 
@@ -170,7 +170,7 @@
 
             //末页
             if (paginator.get('firstLast')) {
-                disabled = page >= (totalPages - half) && totalPages <= pageSpan
+                disabled = page >= totalPages - 1;
                 markup += paginator.__getPageMarkup(totalPages - 1, '末页', disabled);
             }
             return markup;
