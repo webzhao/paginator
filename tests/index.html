@@ -9,7 +9,8 @@
             .ui-pagination {font-size: 14px; line-height: 24px;}
             .ui-page {display:inline-block; margin:0 4px; padding: 0 6px;  border: 1px solid #ddd; background:#f0f0f0; color: #666; text-decoration:none}
             .ui-page:hover {border: 1px solid #ccc; background: #eee;}
-            .ui-page.current {font-style:normal; font-weight:bold;border:none; background:none}
+            .ui-page.current {font-style:normal; font-weight:bold;border:none; background:none;padding:0 5px;}
+            .ui-page.disabled, .ui-page.disabled:hover {border-color:#ddd;color:#bbb;background:#eee;cursor:default;}
         </style>
     </head>
     <body>
@@ -22,11 +23,12 @@
             var paginator = new Paginator({
                 totalItems: 35,
                 itemsPerPage: 10,
-                parentNode: '#bd'
+                parentNode: '#bd',
+                firstLast: true
             });
-paginator.on('change:page', function(evt, newVal, oldVal){
-        console.log(newVal);
-        });
+            paginator.on('change:page', function(evt, newVal, oldVal){
+                console.log(newVal);
+            });
         </script>
     </body>
 </html>

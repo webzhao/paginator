@@ -5,13 +5,42 @@
          * 可选配置项
          */
         attrs: {
-            totalItems: 0,      // 总条数
-            itemsPerPage: 10,   // 每页条数
-            page: 0,            // 当前显示第几页
+            // 总条数
+            totalItems: {
+                value: 0,
+                setter: function(val) {
+                    return this.__getIntValue(val, {'default': 0});
+                }
+            },
+            // 每页条数
+            itemsPerPage: {
+                value: 10,
+                setter: function(val) {
+                    return this.__getIntValue(val, {'default': 10});
+                }
+            },
+            // 当前显示第几页
+            page: {
+                value: 0,
+                setter: function(val) {
+                    return this.__getIntValue(val, {'default': 0, max: this.__totalPages - 1, min: 0});
+                }
+            },
+            // 最多同时显示多少页
+            pageSpan: {
+                value: 10,
+                setter: function(val) {
+                    return this.__getIntValue(val, {'default': 10});
+                }
+            },
             prevNext: true,     // 是否显示上一页/下一页
             firstLast: false,   // 是否显示首页/尾页
-            pageSpan: 10,       // 最多同时显示多少页
-            template: '<div class="ui-pagination"></div>'
+            template: '<div class="ui-pagination"></div>',
+            classNames: {
+                page: 'ui-page',
+                current: 'current',
+                disabled: 'disabled'
+            }
         },
 
         /**
@@ -40,10 +69,17 @@
             var paginator = this;
 
             // 点击页码
-            paginator.delegateEvents('click .ui-page', function(e) {
+            paginator.delegateEvents('click .' + paginator.get('classNames.page'), function(e) {
                 e.preventDefault();
-                var page = $(e.target).data('page');
-                paginator.set('page', parseInt(page, 10));
+                var target = $(e.target),
+                    page,
+                    currentClass = paginator.get('classNames.current'),
+                    disabledClass = paginator.get('classNames.disabled');
+                if (target.hasClass(currentClass) || target.hasClass(disabledClass)) {
+                    return;
+                }
+                page = target.data('page');
+                paginator.set('page', page);
             });
 
             // 属性改变
@@ -62,6 +98,23 @@
         },
 
         /**
+         * 获取整数值
+         */
+        __getIntValue: function(rawValue, options) {
+            var value = parseInt(rawValue);
+            if (isNaN(value)) {
+                value = options['default'] || 0;
+            }
+            if (typeof options.max !== 'undefined' && value > options.max) {
+                value = options.max;
+            }
+            if (typeof options.min !== 'undefined' && value < options.min) {
+                value = options.min;
+            }
+            return value;
+        },
+
+        /**
          * 生成所有分页的HTML结构
          */
         __getMarkup: function() {
@@ -72,6 +125,7 @@
                 pageSpan = paginator.get('pageSpan'),
                 markup = '',
                 half = (paginator.get('pageSpan') / 2) | 0,
+                disabled = false,
                 start1, end1, start2, end2;
 
             // 不足一页的不显示哦
@@ -80,13 +134,15 @@
             }
 
             //首页
-            if (paginator.get('firstLast') && page > half && totalPages > pageSpan) {
-                markup += paginator.__getPageMarkup(0, '首页');
+            if (paginator.get('firstLast')) {
+                disabled = page <= half || totalPages <= pageSpan;
+                markup += paginator.__getPageMarkup(0, '首页', disabled);
             }
 
             //上一页
-            if (paginator.get('prevNext') && page > 0) {
-                markup += paginator.__getPageMarkup(page - 1, '上一页');
+            if (paginator.get('prevNext')) {
+                disabled = page == 0;
+                markup += paginator.__getPageMarkup(page - 1, '上一页', disabled);
             }
 
             //当前页之前的分页链接，半闭区间[start1, end1)
@@ -107,13 +163,15 @@
             }
 
             //下一页
-            if (paginator.get('prevNext') && page < totalPages - 1) {
-                markup += paginator.__getPageMarkup(page + 1, '下一页');
+            if (paginator.get('prevNext')) {
+                disabled = page >= totalPages - 1;
+                markup += paginator.__getPageMarkup(page + 1, '下一页', disabled);
             }
 
             //末页
-            if (paginator.get('firstLast') && page < (totalPages - half) && totalPages > pageSpan) {
-                markup += getURL(total-1, '末页');
+            if (paginator.get('firstLast')) {
+                disabled = page >= (totalPages - half) && totalPages <= pageSpan
+                markup += paginator.__getPageMarkup(totalPages - 1, '末页', disabled);
             }
             return markup;
         },
@@ -121,9 +179,13 @@
         /**
          * 生成某一页的HTML结构
          */
-        __getPageMarkup: function(page, text) {
+        __getPageMarkup: function(page, text, disabled) {
+            var classNames = [ this.get('classNames.page') ];
+            if (disabled) {
+                classNames.push(this.get('classNames.disabled'));
+            }
             text = text || page + 1;
-            return '<a href="#" class="ui-page" data-page="' + page + '">' + text + '</a>';
+            return '<a href="#" class="' + classNames.join(' ') + '" data-page="' + page + '">' + text + '</a>';
         },
 
     });
