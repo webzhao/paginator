@@ -1,0 +1,15 @@
+{
+    "sidebar": {
+        "version": "1.0.0",
+        "files" : {
+            "build/paginator.js" : [
+                "src/paginator.js"
+            ]
+        },
+        "module": "Paginator",
+        "src": "src/paginator.js",
+        "requires": {
+            "widget": "module/widget/1.0.0/widget"
+        }
+    }
+}
