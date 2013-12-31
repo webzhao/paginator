@@ -202,7 +202,7 @@
             }
             text = text || page + 1;
             return '<a href="#" class="' + classNames.join(' ') + '" data-page="' + page + '">' + text + '</a>';
-        },
+        }
 
     });
     this.Paginator = Paginator;
