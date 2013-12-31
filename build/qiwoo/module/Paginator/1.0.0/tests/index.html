@@ -4,21 +4,31 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <title>分页组件</title>
-        <link rel="stylesheet" href="../src/paginator.css" />
-        <link rel="stylesheet" href="http://s4.qhimg.com/static/c8243de50db4649c/mocha.css" />
         <style type="text/css">
+            #bd {margin: 40px auto; width: 800px; text-align: center; }
+            .ui-pagination {font-size: 14px; line-height: 24px;}
+            .ui-page {display:inline-block; margin:0 4px; padding: 0 6px;  border: 1px solid #ddd; background:#f0f0f0; color: #666; text-decoration:none}
+            .ui-page:hover {border: 1px solid #ccc; background: #eee;}
+            .ui-page.current {font-style:normal; font-weight:bold;border:none; background:none;padding:0 5px;}
+            .ui-page.disabled, .ui-page.disabled:hover {border-color:#ddd;color:#bbb;background:#eee;cursor:default;}
         </style>
     </head>
     <body>
-        <script type="text/javascript" src="http://s0.qhimg.com/static/24fee17ef5eeefee/zepto_touch_fx.112.js"></script>
-        <script type="text/javascript" src="http://s0.qhimg.com/static/05e5e157e7b8d30d/mocha.js"></script>
-        <script type="text/javascript" src="http://s4.qhimg.com/static/3277fa15cc2352ec/chai.js"></script>
-        <script type="text/javascript" src="http://s0.qhimg.com/static/a544ceb156ebf3bf/sinon.js"></script>
-
+        <div id="bd"></div>
+        <script src="http://s5.qhimg.com/static/637d69428758a564/jquery.js"></script>
         <script src="../libs/widget.js"></script>
         <script src="../src/paginator.js"></script>
 
         <script type="text/javascript">
+            var paginator = new Paginator({
+                totalItems: 35,
+                itemsPerPage: 10,
+                parentNode: '#bd',
+                firstLast: true
+            });
+            paginator.on('change:page', function(evt, newVal, oldVal){
+                console.log(newVal);
+            });
         </script>
     </body>
 </html>
