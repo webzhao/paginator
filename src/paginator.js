@@ -63,6 +63,22 @@
         },
 
         /**
+         * 下一页
+         */
+        next: function() {
+            var page = (this.get('page') + 1) % (this.__totalPages);
+            this.set('page', page);
+        },
+
+        /**
+         * 上一页
+         */
+        prev: function() {
+            var page = (this.get('page') - 1 + this.__totalPages) % (this.__totalPages);
+            this.set('page', page);
+        },
+
+        /**
          * 绑定事件
          */
         __bindEvents: function() {
