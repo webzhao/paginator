@@ -38,12 +38,43 @@ var pg = new Paginator({
 }
 ```
 
-
-
 #### 注意事项：
 
 > * 当分页总页数只有一页时，分页不显示
 > * 如果想让不可以用的控件隐藏，请使用CSS
 
-## 页码切换时
+### 更新分页信息
+
+对于已经创建的`Paginator`实例，可以通过设置其属性来更新分页的显示：
+
+```js
+/* 设置当前选中第3页 */
+pg.set('page', 2);
+/* 同时设置总条数和每页显示条数 */
+pg.set({
+    totalItems: 24,
+    itemsPerPage: 5
+});
+```
+
+设置`totalItems`、`page`等属性时，分页的显示会自动更新。如果不希望显示更新，可以在调用`set`方法时，将第三个参数传入 `{slient: true}`。例如：
+
+```js
+pg.set('page', 3, {silent: true});
+```
+
+如果想手工触发分页显示的更新，可以调用`updateUI`方法。事实上，改变分页的属性时，组件也是通过自动调用`updateUI`方法来实现的。
+
+## 获取页码切换的事件
+
+当用户通过点击页码改变当前选中的分页时，可以通过实例的`change:page`事件来监听到这一变化。
+
+```js
+pg.on('change:page', function(evt, page){
+    console.log('current page is ' + page);
+});
+```
+
+
+
 
