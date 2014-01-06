@@ -139,7 +139,7 @@
             var paginator = this,
                 totalItems = paginator.get('totalItems'),
                 totalPages = paginator.__totalPages,
-                page = paginator.get('page'),
+                page = Math.min(paginator.get('page'), totalPages),
                 pageSpan = paginator.get('pageSpan'),
                 markup = '',
                 half = (paginator.get('pageSpan') / 2) | 0,

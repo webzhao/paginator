@@ -9,7 +9,7 @@
         "module": "paginator",
         "src": "src/paginator.js",
         "requires": {
-            "widget": "module/widget/1.0.0/widget"
+            "widget": "module/widget/1.0.1/widget"
         }
     }
 }

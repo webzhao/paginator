@@ -1,5 +1,12 @@
-(function(define, global) { 
-define(['module/module/widget/1.0.0/widget'], function(Widget) {
+(function(root, factory) {
+if(typeof exports === 'object') {
+module.exports = factory();
+} else if(typeof define === 'function' && define.amd) {
+define(['module/module/widget/1.0.1/widget'], factory);
+} else {
+root['Paginator'] = factory();
+}
+})(this, function(Widget) {
 Widget = Widget || this.Widget;
 
 
@@ -141,7 +148,7 @@ Widget = Widget || this.Widget;
             var paginator = this,
                 totalItems = paginator.get('totalItems'),
                 totalPages = paginator.__totalPages,
-                page = paginator.get('page'),
+                page = Math.min(paginator.get('page'), totalPages),
                 pageSpan = paginator.get('pageSpan'),
                 markup = '',
                 half = (paginator.get('pageSpan') / 2) | 0,
@@ -210,5 +217,4 @@ Widget = Widget || this.Widget;
 
     });
     return Paginator;
-}); 
-}) ( typeof define === 'function' && define.amd ? define : function (name, requires, factory) { if(typeof name === 'function') { factory = name; } else if(typeof requires === 'function') { factory = requires; } if(typeof module != 'undefined'){ module.exports = factory(require); }else if(typeof window != 'undefined'){ window.Paginator= factory(); } }, this);
+});
