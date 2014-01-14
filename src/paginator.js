@@ -142,7 +142,7 @@
                 markup = '',
                 half = (paginator.get('pageSpan') / 2) | 0,
                 disabled = false,
-                start1, end1, start2, end2;
+                start1, end1, start2, end2, i;
 
             // 不足一页的不显示哦
             if (totalPages <= 1) {
@@ -157,14 +157,14 @@
 
             //上一页
             if (paginator.get('prevNext')) {
-                disabled = page == 0;
+                disabled = page === 0;
                 markup += paginator.__getPageMarkup(page - 1, '上一页', disabled);
             }
 
             //当前页之前的分页链接，半闭区间[start1, end1)
             start1 = Math.max(Math.min(page - half, totalPages - pageSpan), 0);
             end1 = page;
-            for (var i = start1; i < end1; i++) {
+            for (i = start1; i < end1; i++) {
                 markup += paginator.__getPageMarkup(i);
             }
 
@@ -174,7 +174,7 @@
             //当前页之后的分页链接，半闭区间[start2, end2)
             start2 = page + 1;
             end2 = Math.min(Math.max(page + half, start1 + pageSpan), totalPages);
-            for (var i = start2; i < end2; i++) {
+            for (i = start2; i < end2; i++) {
                 markup += paginator.__getPageMarkup(i);
             }
 
