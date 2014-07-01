@@ -27,6 +27,8 @@ var pg = new Paginator({
 **pageSpan**     | Number  | 最多同时显示多少个页码，默认为`10`
 **prevNext**     | Boolean | 是否显示「上一页」和「下一页」，默认为`true`
 **firstLast**    | Boolean | 是否显示「首页」和「尾页」，默认为`false`
+**showTotal**    | Boolean | 是否显示总数，默认为`false`
+**psConfigurable** | Boolean | 是否可选择每页显示条数，默认为`false`，如需配置，请传入分页的数组，如[20, 50, 100]
 **classNames**   | JSON    | 生成分页时，给元素附加的`CSS`类名，详情如下
 
 ```js
