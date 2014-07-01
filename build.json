@@ -1,15 +1,18 @@
 {
     "paginator": {
-        "version": "1.0.0",
+        "version": "1.0.1",
         "files" : {
-            "build/paginator.js" : [
+            "build/paginator.1.0.1.js" : [
                 "src/paginator.js"
+            ],
+            "build/paginator.1.0.1.css" : [
+                "src/paginator.css"
             ]
         },
         "module": "paginator",
         "src": "src/paginator.js",
         "requires": {
-            "widget": "module/widget/1.0.1/widget"
+            "widget": "module/widget/1.0.2/widget"
         }
     }
 }
