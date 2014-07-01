@@ -121,7 +121,7 @@ widget = widget || this.widget;
             });
 
             // 属性改变
-            paginator.on('change:totalItems change:page change:prevNext', function(){
+            paginator.on('change:totalItems change:page', function(){
                 paginator.updateUI();
             });
 
