@@ -1,3 +1,5 @@
+/* Version 1.0.1 */
+
 (function(){
     var Paginator = Widget.extend({
 

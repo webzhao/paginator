@@ -1,4 +1,15 @@
-(function(){
+(function(root, factory) {
+if(typeof exports === 'object') {
+module.exports = factory();
+} else if(typeof define === 'function' && define.amd) {
+define(['module/widget/1.0.2/widget'], factory);
+} else {
+root['Paginator'] = factory();
+}
+})(this, function(widget) {
+widget = widget || this.widget;
+
+
     var Paginator = Widget.extend({
 
         /**
@@ -233,5 +244,5 @@
         }
 
     });
-    this.Paginator = Paginator;
-})();
+    return Paginator;
+});
